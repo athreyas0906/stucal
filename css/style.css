@@ -85,23 +85,7 @@ button {
 }
 
 
-/* Eliminate browser headline spacing overrides */
-.brand h1,
-.topbar .brand h1 {
-  margin: 0 !important;
-  padding: 0 !important;
-  display: block !important;
-}
 
-/* Style the dynamic greeting paragraph cleanly underneath */
-#welcomeSubtext {
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  font-size: 13px !important;
-  color: #555555 !important;
-  font-weight: 400 !important;
-}
 .brand-mark {
   font-family: var(--font-mono);
   font-size: 12px;
