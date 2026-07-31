@@ -448,13 +448,13 @@ button {
 }
 
 
-/* FIXED: Linked dot color classes directly to the inline-tag-dot elements */
 .inline-tag-dot.dot-study       { background-color: #7C4DFF !important; } /* Electric Indigo */
 .inline-tag-dot.dot-class       { background-color: #0077FF !important; } /* Neon Blue */
 .inline-tag-dot.dot-mock        { background-color: #FF2E63 !important; } /* Vibrant Crimson */
 .inline-tag-dot.dot-physics     { background-color: #00D2FC !important; } /* Vivid Cyan */
 .inline-tag-dot.dot-chemistry   { background-color: #00E676 !important; } /* Spring Green */
-.inline-tag-dot.dot-mathematics { background-color: #FF9100 !important; } /* Deep Amber Amber */
+.inline-tag-dot.dot-mathematics { background-color: #FF9100 !important; } /* Deep Amber */
+
 .pill-time {
   font-family: var(--font-mono), monospace;
   font-size: 10px !important;
@@ -614,12 +614,6 @@ button {
 }
 
 /* Apply distinct indicator colors to the dot based on tag type */
-.tag-study .pill-dot       { background-color: #5A3FD4 !important; }
-.tag-class .pill-dot       { background-color: #2A3F9E !important; }
-.tag-mock .pill-dot        { background-color: #A63A2F !important; }
-.tag-physics .pill-dot     { background-color: #0D47A1 !important; }
-.tag-chemistry .pill-dot   { background-color: #1B5E20 !important; }
-.tag-mathematics .pill-dot { background-color: #E65100 !important; }
 
 /* Text container alignment */
 .pill-text {
