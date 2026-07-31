@@ -555,9 +555,9 @@ document.getElementById("deleteBtn").addEventListener("click", () => {
 });
 
 /* ---------------------------------------------------------
-   Top-Level Navigation Controls
+   Top-Level Navigation Controls (Restored Original JS)
 --------------------------------------------------------- */
-// --- NEW: Download Calendar Events Array as a Local .json Text File ---
+// --- Download Calendar Events Array as a Local .json Text File ---
 document.getElementById("exportBtn").addEventListener("click", () => {
   if (state.events.length === 0) {
     alert("There are no events to backup.");
@@ -572,36 +572,12 @@ document.getElementById("exportBtn").addEventListener("click", () => {
   downloadAnchor.remove();
 });
 
-// --- NEW: Trigger Hidden File Explorer Window Prompt ---
+// --- Trigger Hidden File Explorer Window Prompt ---
 document.getElementById("importBtn").addEventListener("click", () => {
   document.getElementById("hiddenFileInput").click();
 });
 
-// --- FIXED: Toggle Floating Action Panel View with Click Containment ---
-const menuContainer = document.querySelector(".floating-menu-container");
-const actionPanel = document.getElementById("floatingActionPanel");
-const menuTrigger = document.getElementById("floatingMenuTrigger");
-
-if (menuTrigger && actionPanel) {
-  menuTrigger.addEventListener("click", (e) => {
-    e.stopPropagation();
-    actionPanel.classList.toggle("panel-open");
-    menuContainer.classList.toggle("menu-active");
-  });
-
-  // FIXED: Prevents clicks inside the panel text or buttons from triggering the close listener
-  actionPanel.addEventListener("click", (e) => {
-    e.stopPropagation();
-  });
-
-  // Close the action panel automatically if user clicks anywhere else on the screen
-  document.addEventListener("click", () => {
-    actionPanel.classList.remove("panel-open");
-    if (menuContainer) menuContainer.classList.remove("menu-active");
-  });
-}
-
-// --- NEW: Intercept Uploaded File and Overwrite Local Storage ---
+// --- Intercept Uploaded File and Overwrite Local Storage ---
 document.getElementById("hiddenFileInput").addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (!file) return;
@@ -611,7 +587,6 @@ document.getElementById("hiddenFileInput").addEventListener("change", (e) => {
     try {
       const parsedData = JSON.parse(event.target.result);
       
-      // Safety Check: Enforce structural JSON array validation
       if (!Array.isArray(parsedData)) {
         alert("Invalid backup file format. Must be an array of events.");
         return;
@@ -619,14 +594,13 @@ document.getElementById("hiddenFileInput").addEventListener("change", (e) => {
 
       if (confirm(`Are you sure you want to restore ${parsedData.length} events? This will overwrite your current calendar.`)) {
         state.events = parsedData;
-        saveEvents(); // Save array to LocalStorage
-        renderAll();   // Re-render views
+        saveEvents(); 
+        renderAll();   
         alert("Calendar data successfully restored!");
       }
     } catch (err) {
       alert("Error parsing file. Make sure it's a valid calendar JSON file.");
     }
-    // Clear the input value so the same file can be uploaded sequentially
     e.target.value = "";
   };
   reader.readAsText(file);
