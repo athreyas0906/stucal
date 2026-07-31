@@ -1060,34 +1060,38 @@ button {
 
 @keyframes automatedRippleFocus {
   0% {
-    background-color: #FFFFFF !important; /* Stays solid at the absolute start */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    clip-path: circle(0% at 50% 50%);
-    -webkit-clip-path: circle(0% at 50% 50%);
+    opacity: 1 !important;
+    background-color: #FFFFFF !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    clip-path: circle(0% at 50% 50%) !important;
+    -webkit-clip-path: circle(0% at 50% 50%) !important;
   }
-  /* FIXED: Gradually softens the background color so it doesn't flash white */
-  30% {
-    background-color: rgba(255, 255, 255, 0.7) !important;
+  /* FIXED: Smoothly dissolves the white layer while the circle cuts open */
+  60% {
+    background-color: rgba(255, 255, 255, 0.4) !important;
   }
   99% {
-    background-color: rgba(255, 255, 255, 0) !important;
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-    clip-path: circle(141.4% at 50% 50%);
-    -webkit-clip-path: circle(141.4% at 50% 50%);
-    pointer-events: none;
+    opacity: 0 !important;
+    background-color: transparent !important;
+    backdrop-filter: blur(0px) !important;
+    -webkit-backdrop-filter: blur(0px) !important;
+    clip-path: circle(141.4% at 50% 50%) !important;
+    -webkit-clip-path: circle(141.4% at 50% 50%) !important;
+    pointer-events: none !important;
   }
   100% {
-    background-color: rgba(255, 255, 255, 0) !important;
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-    clip-path: circle(141.4% at 50% 50%);
-    -webkit-clip-path: circle(141.4% at 50% 50%);
-    pointer-events: none;
-    display: none !important; /* Exits the view cleanly */
+    opacity: 0 !important;
+    background-color: transparent !important;
+    backdrop-filter: blur(0px) !important;
+    -webkit-backdrop-filter: blur(0px) !important;
+    clip-path: circle(141.4% at 50% 50%) !important;
+    -webkit-clip-path: circle(141.4% at 50% 50%) !important;
+    pointer-events: none !important;
+    display: none !important; /* Discards visibility completely */
   }
 }
+
 
 
 @media (prefers-reduced-motion: reduce) {
