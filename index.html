@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StuCal — Calendar</title>
+<title>Study Log — Calendar</title>
 <meta name="description" content="A clean, editable calendar for planning study sessions, assignments, and exams.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,27 +25,29 @@
 
   <div class="layout">
     <div class="calendar-wrap">
-      <div class="month-tab" id="monthTab">Aug 2026</div>
+      <!-- 1. Changed ID to reflect a rolling day/date view badge rather than a fixed month tab -->
+      <div class="month-tab" id="viewTab">3-Day View</div>
       <div class="calendar-card">
         <div class="calendar-head">
           <div class="month-nav">
-            <button class="nav-btn" id="prevBtn" aria-label="Previous month">&#8249;</button>
-            <div class="month-label" id="monthLabel">August 2026</div>
-            <button class="nav-btn" id="nextBtn" aria-label="Next month">&#8250;</button>
+            <!-- 2. Updated IDs and aria-labels for day navigation -->
+            <button class="nav-btn" id="prevBtn" aria-label="Previous days">‹</button>
+            <div class="month-label" id="dateRangeLabel">Loading days...</div>
+            <button class="nav-btn" id="nextBtn" aria-label="Next days">›</button>
           </div>
           <div style="display:flex; gap:8px; align-items:center;">
             <button class="today-btn" id="todayBtn">Today</button>
             <button class="add-btn" id="addEventBtn">+ Add session</button>
           </div>
         </div>
-        <div class="weekday-row" id="weekdayRow"></div>
-        <div class="grid" id="grid"></div>
+        <!-- 3. Kept the grid container. We will inject exactly 3 day-columns into this element via JavaScript -->
+        <div class="grid" id="grid" style="grid-template-columns: repeat(3, 1fr);"></div>
       </div>
     </div>
 
     <aside class="sidebar">
       <div class="panel">
-        <h2>Next two weeks</h2>
+        <h2>Next 5 items</h2>
         <div class="agenda-list" id="agendaList"></div>
       </div>
 
@@ -87,16 +88,55 @@
           <input type="time" id="timeInput">
         </div>
       </div>
+ <div class="field">
+        <label for="recurrenceInput">Repeat</label>
+        <select id="recurrenceInput">
+          <option value="none">Does not repeat</option>
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select>
+      </div>
 
-      <div class="field">
-        <label>Type</label>
+  <div class="field">
+        <label>Type (Select all that apply)</label>
         <div class="type-options">
-          <button type="button" class="type-chip" data-type="study">Study session</button>
-          <button type="button" class="type-chip" data-type="assignment">Assignment</button>
-          <button type="button" class="type-chip" data-type="exam">Exam</button>
-          <button type="button" class="type-chip" data-type="review">Review</button>
+          <!-- Hidden inputs paired with clickable labels acting as multi-select chips -->
+          <label class="multi-chip-wrapper">
+            <input type="checkbox" name="eventTags" value="study" style="display: none;">
+            <span class="chip-label">Study</span>
+          </label>
+          <label class="multi-chip-wrapper">
+            <input type="checkbox" name="eventTags" value="class" style="display: none;">
+            <span class="chip-label">Class</span>
+          </label>
+          <label class="multi-chip-wrapper">
+            <input type="checkbox" name="eventTags" value="mock" style="display: none;">
+            <span class="chip-label">Mock</span>
+          </label>
+          <label class="multi-chip-wrapper">
+            <input type="checkbox" name="eventTags" value="physics" style="display: none;">
+            <span class="chip-label">Physics</span>
+          </label>
+          <label class="multi-chip-wrapper">
+            <input type="checkbox" name="eventTags" value="chemistry" style="display: none;">
+            <span class="chip-label">Chemistry</span>
+          </label>
+          <label class="multi-chip-wrapper">
+            <input type="checkbox" name="eventTags" value="mathematics" style="display: none;">
+            <span class="chip-label">Mathematics</span>
+          </label>
         </div>
       </div>
+            <!-- Place this inside the <form id="eventForm"> -->
+      <div class="field" style="display:flex; align-items:center; gap:8px; margin-top:10px;">
+        <input type="checkbox" id="importantInput" style="width:auto; margin:0;">
+        <label for="importantInput" style="margin:0; text-transform:none; cursor:pointer;">
+          ⭐ Mark as Important Event (Triggers Notification)
+        </label>
+      </div>
+
+
 
       <div class="field">
         <label for="notesInput">Notes (optional)</label>
