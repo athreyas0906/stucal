@@ -126,8 +126,9 @@ button {
   display: grid;
   grid-template-columns: 1fr 300px;
   gap: 20px;
-  align-items: start;
+  align-items: start; /* Preserved: Keeps sidebar from stretching vertically */
 }
+
 
 @media (max-width: 880px) {
   .layout { grid-template-columns: 1fr; }
@@ -139,6 +140,7 @@ button {
 .calendar-wrap {
   position: relative;
   padding-left: 34px;
+   min-width: 0; 
 }
 
 @media (max-width: 560px) {
@@ -261,39 +263,61 @@ button {
   text-align: left;
 }
 
-.grid {
+/*.grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-auto-rows: minmax(96px, 1fr);
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+--- COMPACT 3-DAY FLUSH TIMELINE LAYOUT --- */
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 0; 
+  width: 100%;
+  /* CHANGED: Sets the entire container height to 70% of the visible viewport height */
+  height: 70vh; 
+  border-left: 1px solid var(--line-soft); 
+  border-top: 1px solid var(--line-soft); 
+  box-sizing: border-box;
 }
 
 .day {
   border-right: 1px solid var(--line-soft);
   border-bottom: 1px solid var(--line-soft);
-  padding: 7px 7px 8px;
+  border-radius: 0; 
+  padding: 10px 12px 14px; 
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 5px;
   min-width: 0;
+  /* CHANGED: Switched from fixed min-height to an auto-stretching height calculation */
+  height: 100%; 
   transition: background 0.15s ease;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
-.day:nth-child(7n) { border-right: none; }
 
-.day:hover { background: #FAFBFD; }
+.day:hover { 
+  background: #FAFBFD; 
+}
 
-.day.out-of-month { background: #FBFBFC; }
-.day.out-of-month .day-num { color: var(--ink-faint); }
-.day.out-of-month:hover { background: #F6F7FA; }
+/* CHANGED: Subtle tint to block out the current date strip cleanly without disrupting adjacent walls */
+.day.is-today {
+  background-color: #FFFDEB; 
+}
 
 .day-num {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 15px; 
   color: var(--ink-soft);
   position: relative;
   width: fit-content;
+  margin-bottom: 10px;
 }
 
 .day.is-today .day-num {
@@ -314,36 +338,157 @@ button {
   z-index: -1;
 }
 
+/* --- PRESERVED BASE SCHEMES --- */
+
 .day-events {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  overflow: hidden;
+  display: flex !important;
+  flex-direction: column !important;
+  /* CHANGED: Increased from 3px to 8px for clear, distinct breathing room between event cards */
+  gap: 8px !important; 
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex-grow: 1;
+  padding-right: 2px;
+}
+.day-events::-webkit-scrollbar {
+  width: 4px;
+}
+.day-events::-webkit-scrollbar-thumb {
+  background: var(--line-soft);
+  border-radius: 4px;
+}
+.day-events::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-faint);
+}
+/* ---------------------------------------------------------
+   Calendar Grid Event Squares (Rounded-Square Layout Stack)
+--------------------------------------------------------- */
+.day-events .pill {
+  display: flex !important;
+  flex-direction: column !important; 
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: auto !important;
+  box-sizing: border-box !important;
+  padding: 8px 10px !important; /* Preserves your exact padding */
+  border-radius: 8px !important;     
+  background: #F2F3F5 !important; 
+  color: #333333 !important; 
+  border: 1px solid #D2D5DC !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease !important;
+  /* NEW: Forces extended border-lines to clip seamlessly into the card's 8px corners */
+  overflow: hidden !important; 
 }
 
-.pill {
-  font-size: 11px;
-  line-height: 1.3;
-  padding: 3px 6px;
-  border-radius: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-left: 2px solid transparent;
+
+.day-events .pill:hover {
+  background: #E8EAEF !important;
+}
+/* ---------------------------------------------------------
+   Horizontal Dots Row (Across the Top of the Square)
+--------------------------------------------------------- */
+.pill-dots-row {
+  display: flex !important;
+  flex-direction: row !important; /* Places dots side-by-side */
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 4px !important;           
+  margin-bottom: 2px !important;  
+  width: 100% !important;
+  height: auto !important;
+}
+/* --- METADATA ROW WITH AN EXTENDED SEPARATOR BAR --- */
+.pill-dots-row,
+.day-events .pill .pill-dots-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  height: auto !important;
+  gap: 8px !important;
+
+  /* FIXED: Negative margins exactly matching the parent padding to go fully edge-to-edge */
+  width: calc(100% + 24px) !important; 
+  margin-left: -12px !important;
+  margin-right: -12px !important;
+  
+  /* FIXED: Adds horizontal padding inside so indicators stay inside the safe zone */
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+  
+  /* Divider Line */
+  border-bottom: 1px solid #D2D5DC !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 8px !important;
 }
 
-.pill.tag-exam { background: var(--coral-soft); color: #A63A2F; border-color: var(--coral); }
-.pill.tag-assignment { background: var(--blue-soft); color: #2A3F9E; border-color: var(--blue); }
-.pill.tag-study { background: var(--purple-soft); color: #5A3FD4; border-color: var(--purple); }
-.pill.tag-review { background: var(--teal-soft); color: #0C6E58; border-color: var(--teal); }
+
+
+.inline-tag-dot {
+  /* FIXED: Increased width and height from 6px to 9px for better visibility */
+  width: 9px !important;
+  height: 9px !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.dot-cluster {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  flex-shrink: 0 !important;
+}
+
+
+/* FIXED: Linked dot color classes directly to the inline-tag-dot elements */
+.inline-tag-dot.dot-study       { background-color: #5A3FD4 !important; }
+.inline-tag-dot.dot-class       { background-color: #2A3F9E !important; }
+.inline-tag-dot.dot-mock        { background-color: #A63A2F !important; }
+.inline-tag-dot.dot-physics     { background-color: #0D47A1 !important; }
+.inline-tag-dot.dot-chemistry   { background-color: #1B5E20 !important; }
+.inline-tag-dot.dot-mathematics { background-color: #E65100 !important; }
+.pill-time {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  background-color: rgba(0, 0, 0, 0.05) !important; 
+  color: var(--ink-soft, #555) !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  margin: 0 !important; 
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+}
+
+
+
+/* ---------------------------------------------------------
+   Event Text Formatting
+--------------------------------------------------------- */
+.pill-text {
+  font-size: 11.5px !important;
+  line-height: 1.4 !important;
+  color: var(--ink, #333) !important;
+  text-align: left !important;
+  width: 100% !important;
+  display: block !important;
+}
 
 .more-link {
   font-family: var(--font-mono);
   font-size: 10.5px;
   color: var(--ink-faint);
   padding-left: 2px;
+  margin-top: 4px;
 }
-
 /* ---------------------------------------------------------
    Sidebar
 --------------------------------------------------------- */
@@ -351,6 +496,12 @@ button {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  /* CHANGED: Defines a static layout width so columns don't compress it */
+  width: 280px; 
+  flex-shrink: 0;
+  /* CHANGED: Keeps the panels fixed at the top alongside your 70vh calendar */
+  position: sticky;
+  top: 20px; 
 }
 
 .panel {
@@ -360,7 +511,6 @@ button {
   box-shadow: var(--shadow-card);
   padding: 16px 16px 18px;
 }
-
 .panel h2 {
   font-family: var(--font-display);
   font-size: 15px;
@@ -368,47 +518,177 @@ button {
   margin: 0 0 12px;
 }
 
+/* ---------------------------------------------------------
+   Sidebar — Legend Containers & Spacing
+--------------------------------------------------------- */
 .legend {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px !important; 
 }
-
 .legend-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--ink-soft);
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
 }
-
-.legend-row button {
-  border: none;
-  background: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 2px 0;
-  color: inherit;
-  font-size: 13px;
-  opacity: 1;
-  transition: opacity 0.15s ease;
-}
-
-.legend-row button.off { opacity: 0.35; }
-
-.dot {
-  width: 9px;
-  height: 9px;
+.legend-row button.pill .pill-dot {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  flex: none;
+  flex-shrink: 0;
+  display: inline-block;
+}
+/* Sidebar dot colors mapping */
+.tag-study .pill-dot       { background-color: #5A3FD4 !important; }
+.tag-class .pill-dot       { background-color: #2A3F9E !important; }
+.tag-mock .pill-dot        { background-color: #A63A2F !important; }
+.tag-physics .pill-dot     { background-color: #0D47A1 !important; }
+.tag-chemistry .pill-dot   { background-color: #1B5E20 !important; }
+.tag-mathematics .pill-dot { background-color: #E65100 !important; }
+/* ---------------------------------------------------------
+   Pill Containers (Unified Calendar & Legend Layout)
+--------------------------------------------------------- */
+.pill, 
+.legend-row button.pill {
+  display: flex !important;
+  flex-direction: row !important; /* Ensures left-to-right alignment inside the sidebar */
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 6px 12px !important;
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+  /* Capsule Rounded Corners */
+  border-radius: 20px !important; 
+  /* Uniform Light Gray Appearance */
+  background: #F2F3F5 !important; 
+  color: #333333 !important; 
+  border: 1px solid #D2D5DC !important;
+  width: 100% !important;
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
+  /* FIXED: Prevents layout engines from collapsing heights or adding external margins */
+  height: auto !important;
+  min-height: unset !important;
+  margin: 0 !important;
+  transition: opacity 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
 }
 
-.dot.tag-exam { background: var(--coral); }
-.dot.tag-assignment { background: var(--blue); }
-.dot.tag-study { background: var(--purple); }
-.dot.tag-review { background: var(--teal); }
+/* Hover effect */
+.pill:hover,
+.legend-row button.pill:not(.off):hover {
+  background: #E8EAEF !important;
 
+}
+
+/* Dim legend pill when turned off */
+
+.legend-row button.off {
+  opacity: 0.35;
+}
+
+/* ---------------------------------------------------------
+   The Distinct Colored Dot inside the Pill
+--------------------------------------------------------- */
+.pill-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-block;
+  /* FIXED: Prevents dots from shifting position under layout changes */
+  margin: 0 !important; 
+}
+
+/* Apply distinct indicator colors to the dot based on tag type */
+.tag-study .pill-dot       { background-color: #5A3FD4 !important; }
+.tag-class .pill-dot       { background-color: #2A3F9E !important; }
+.tag-mock .pill-dot        { background-color: #A63A2F !important; }
+.tag-physics .pill-dot     { background-color: #0D47A1 !important; }
+.tag-chemistry .pill-dot   { background-color: #1B5E20 !important; }
+.tag-mathematics .pill-dot { background-color: #E65100 !important; }
+
+/* Text container alignment */
+.pill-text {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  text-align: left;
+}
+.agenda-item {
+  display: grid !important;
+  grid-template-columns: 44px 1fr !important; /* Keeps the date column fixed */
+  gap: 10px !important;
+  padding-bottom: 10px !important;
+  border-bottom: 1px solid var(--line-soft);
+  cursor: pointer !important;
+  /* FIXED: Enforces rigid container layout calculation */
+  min-width: 0 !important; 
+  max-width: 100% !important;
+  overflow: hidden !important; 
+}
+/* Force the right-hand text container to remain tightly inside its block */
+.agenda-item > div:last-child,
+.agenda-content-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  /* FIXED: Forces the browser to calculate text overflow bounds instead of expanding */
+  min-width: 0 !important; 
+  max-width: 100% !important; 
+  overflow: hidden !important; 
+}
+.agenda-title-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+/* --- TRUNCATED TITLE TEXT WITH CORE THEME FONT FAMILY FORCED --- */
+.agenda-title-text,
+.agenda-item .agenda-title-text,
+.agenda-title {
+  /* FIXED: Explicitly force Inter/body font usage and clear out monospace overrides */
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13.5px !important;
+  color: var(--ink, #333333) !important;
+  font-weight: 400 !important;
+  
+  /* Retain the clean single-line overflow truncation */
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: inline-block !important;
+  flex-grow: 1 !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  text-align: left !important;
+}
+/* --- THE ACTUAL TRUNCATED TITLE TEXT --- */
+.agenda-title-text,
+.agenda-title {
+  /* FIXED: Set font-family explicitly to match your layout's core font */
+  font-family: var(--font-body), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 13.5px !important;
+  color: var(--ink) !important;
+  
+  /* Retain the clean single-line overflow truncation */
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: inline-block !important;
+  flex-grow: 1 !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  text-align: left !important;
+}
 .agenda-list {
   display: flex;
   flex-direction: column;
@@ -453,6 +733,16 @@ button {
   font-size: 13.5px;
   color: var(--ink);
   line-height: 1.35;
+  /* FIXED: Enforces single-line layout and cuts off overflowing text with an ellipsis */
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100% !important;
+}
+/* Ensure the title text's parent layout item stretches correctly across the container */
+.agenda-item > div:last-child {
+  overflow: hidden !important;
+  min-width: 0 !important;
 }
 
 .agenda-time {
@@ -485,7 +775,7 @@ button {
 }
 
 /* ---------------------------------------------------------
-   Modal
+   Modal Containers & Layouts
 --------------------------------------------------------- */
 .modal-backdrop {
   position: fixed;
@@ -511,13 +801,16 @@ button {
   border-radius: var(--radius);
   box-shadow: var(--shadow-pop);
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   padding: 22px;
   transform: translateY(8px);
   transition: transform 0.15s ease;
+  box-sizing: border-box;
 }
 
-.modal-backdrop.open .modal { transform: translateY(0); }
+.modal-backdrop.open .modal { 
+  transform: translateY(0); 
+}
 
 .modal h3 {
   font-family: var(--font-display);
@@ -525,8 +818,17 @@ button {
   margin: 0 0 16px;
 }
 
+/* ---------------------------------------------------------
+   Form Inputs & Field Layouts (Restored Form Structure)
+--------------------------------------------------------- */
+#eventForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .field {
-  margin-bottom: 13px;
+  margin-bottom: 4px;
 }
 
 .field label {
@@ -545,6 +847,7 @@ button {
 .field select,
 .field textarea {
   width: 100%;
+  box-sizing: border-box;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   padding: 9px 10px;
@@ -562,37 +865,95 @@ button {
 .field-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
 }
 
+/* ---------------------------------------------------------
+   Modal Multi-Select Tags Layout
+--------------------------------------------------------- */
 .type-options {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px; 
 }
 
-.type-chip {
+/* Base style for the multi-select labels acting as clickable chips */
+.multi-chip-wrapper {
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  margin: 0 !important;
+}
+
+.multi-chip-wrapper .chip-label {
   border: 1px solid var(--line);
   background: var(--surface);
-  border-radius: 999px;
-  padding: 6px 12px;
+  border-radius: 999px; 
+  padding: 6px 14px;
   font-size: 12.5px;
   color: var(--ink-soft);
   display: flex;
   align-items: center;
   gap: 6px;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
 }
 
-.type-chip.active {
-  border-color: transparent;
-  color: var(--surface);
+/* Hover effect on available choices */
+.multi-chip-wrapper:hover .chip-label {
+  background: var(--line-soft, #F5F6F8);
+  color: var(--ink);
 }
 
-.type-chip[data-type="exam"].active { background: var(--coral); }
-.type-chip[data-type="assignment"].active { background: var(--blue); }
-.type-chip[data-type="study"].active { background: var(--purple); }
-.type-chip[data-type="review"].active { background: var(--teal); }
+/* ---------------------------------------------------------
+   Active Checkbox States with Distinct Border/Bg Themes
+--------------------------------------------------------- */
+.multi-chip-wrapper input[value="study"]:checked + .chip-label {
+  background: var(--purple-soft, #F3EFFF) !important;
+  color: #5A3FD4 !important;
+  border-color: var(--purple, #5A3FD4) !important;
+  font-weight: 500;
+}
 
+.multi-chip-wrapper input[value="class"]:checked + .chip-label {
+  background: var(--blue-soft, #EEF2FF) !important;
+  color: #2A3F9E !important;
+  border-color: var(--blue, #2A3F9E) !important;
+  font-weight: 500;
+}
+
+.multi-chip-wrapper input[value="mock"]:checked + .chip-label {
+  background: var(--coral-soft, #FFF0EF) !important;
+  color: #A63A2F !important;
+  border-color: var(--coral, #A63A2F) !important;
+  font-weight: 500;
+}
+
+.multi-chip-wrapper input[value="physics"]:checked + .chip-label {
+  background: #E3F2FD !important;
+  color: #0D47A1 !important;
+  border-color: #90CAF9 !important;
+  font-weight: 500;
+}
+
+.multi-chip-wrapper input[value="chemistry"]:checked + .chip-label {
+  background: #E8F5E9 !important;
+  color: #1B5E20 !important;
+  border-color: #A5D6A7 !important;
+  font-weight: 500;
+}
+
+.multi-chip-wrapper input[value="mathematics"]:checked + .chip-label {
+  background: #FFF3E0 !important;
+  color: #E65100 !important;
+  border-color: #FFCC80 !important;
+  font-weight: 500;
+}
+
+/* ---------------------------------------------------------
+   Modal Actions & Buttons
+--------------------------------------------------------- */
 .modal-actions {
   display: flex;
   justify-content: space-between;
@@ -607,6 +968,7 @@ button {
   font-size: 13px;
   font-weight: 600;
   font-family: var(--font-body);
+  cursor: pointer;
 }
 
 .btn-primary { background: var(--ink); color: var(--surface); }
