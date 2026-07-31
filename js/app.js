@@ -14,7 +14,7 @@ const TYPE_LABELS = {
 };
 
 let state = {
-  cursor: (() => { const d = new Date(); d.setHours(0,0,0,0); return d; })(),
+  cursor: startOfMonth(new Date()),
   events: [],
   hiddenTypes: new Set(),
   editingId: null
@@ -92,6 +92,11 @@ const WEEKDAY_SHORT = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
 /* ---------------- rendering: calendar grid ---------------- */
 
+function renderWeekdayRow() {
+  const row = document.getElementById("weekdayRow");
+  row.innerHTML = WEEKDAY_SHORT.map(d => `<div>${d}</div>`).join("");
+}
+
 function visibleEventsByDate() {
   const map = {};
   for (const ev of state.events) {
@@ -106,33 +111,30 @@ function visibleEventsByDate() {
 }
 
 function renderCalendar() {
-  const days = [];
-  for (let i = 0; i < 3; i++) {
-    const d = new Date(state.cursor);
-    d.setDate(d.getDate() + i);
-    days.push(d);
-  }
-
-  const startLabel = `${MONTH_NAMES[days[0].getMonth()].slice(0,3)} ${days[0].getDate()}`;
-  const endLabel = `${MONTH_NAMES[days[2].getMonth()].slice(0,3)} ${days[2].getDate()}, ${days[2].getFullYear()}`;
-  document.getElementById("monthLabel").textContent = `${startLabel} – ${endLabel}`;
-  document.getElementById("monthTab").textContent = `${MONTH_NAMES[days[0].getMonth()].slice(0,3)} ${days[0].getFullYear()}`;
-
-  const row = document.getElementById("weekdayRow");
-  row.innerHTML = days.map(d => `<div>${WEEKDAY_SHORT[d.getDay()]}</div>`).join("");
+  const cursor = state.cursor;
+  document.getElementById("monthLabel").textContent = `${MONTH_NAMES[cursor.getMonth()]} ${cursor.getFullYear()}`;
+  document.getElementById("monthTab").textContent = `${MONTH_NAMES[cursor.getMonth()].slice(0,3)} ${cursor.getFullYear()}`;
 
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
 
+  const firstOfMonth = startOfMonth(cursor);
+  const firstWeekday = firstOfMonth.getDay();
+  const gridStart = new Date(firstOfMonth);
+  gridStart.setDate(gridStart.getDate() - firstWeekday);
+
   const eventsByDate = visibleEventsByDate();
   const today = new Date();
 
-  for (const cellDate of days) {
+  for (let i = 0; i < 42; i++) {
+    const cellDate = new Date(gridStart);
+    cellDate.setDate(gridStart.getDate() + i);
     const iso = toISODate(cellDate);
+    const outOfMonth = cellDate.getMonth() !== cursor.getMonth();
     const isToday = isSameDay(cellDate, today);
 
     const cell = document.createElement("div");
-    cell.className = "day" + (isToday ? " is-today" : "");
+    cell.className = "day" + (outOfMonth ? " out-of-month" : "") + (isToday ? " is-today" : "");
     cell.dataset.date = iso;
 
     const num = document.createElement("div");
@@ -334,19 +336,17 @@ document.getElementById("deleteBtn").addEventListener("click", () => {
 /* ---------------- top-level controls ---------------- */
 
 document.getElementById("prevBtn").addEventListener("click", () => {
-  state.cursor = new Date(state.cursor.getFullYear(), state.cursor.getMonth(), state.cursor.getDate() - 3);
+  state.cursor = new Date(state.cursor.getFullYear(), state.cursor.getMonth() - 1, 1);
   renderCalendar();
 });
 
 document.getElementById("nextBtn").addEventListener("click", () => {
-  state.cursor = new Date(state.cursor.getFullYear(), state.cursor.getMonth(), state.cursor.getDate() + 3);
+  state.cursor = new Date(state.cursor.getFullYear(), state.cursor.getMonth() + 1, 1);
   renderCalendar();
 });
 
 document.getElementById("todayBtn").addEventListener("click", () => {
-  const d = new Date();
-  d.setHours(0,0,0,0);
-  state.cursor = d;
+  state.cursor = startOfMonth(new Date());
   renderCalendar();
 });
 
@@ -358,6 +358,7 @@ document.getElementById("resetBtn").addEventListener("click", resetToDefaults);
 function init() {
   state.events = loadEvents();
   state.hiddenTypes = loadHiddenTypes();
+  renderWeekdayRow();
   renderAll();
 }
 
