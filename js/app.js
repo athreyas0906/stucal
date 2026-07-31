@@ -432,13 +432,22 @@ function updateWelcomeMessage() {
 
   const now = new Date();
   const currentISO = toISODate(now);
-  
+  const currentHour = now.getHours(); // Retrieves current hour (0-23)
+
+  // 1. Calculate the contextual greeting based on time threshold windows
+  let timeGreeting = "Good evening Athreya"; // Fallback default
+  if (currentHour >= 5 && currentHour < 12) {
+    timeGreeting = "Good morning Athreya";
+  } else if (currentHour >= 12 && currentHour < 17) {
+    timeGreeting = "Good afternoon Athreya";
+  }
+
   // Calculate active, unhidden sessions planned for today
   const visibleMap = visibleEventsByDate();
   const todaysCount = visibleMap[currentISO] ? visibleMap[currentISO].length : 0;
 
-  // Build an elegant greeting statement string
-  let message = `Welcome back! `;
+  // 2. Build the unified dynamic subtext string
+  let message = `${timeGreeting}! `;
   if (todaysCount === 0) {
     message += `You have no study sessions scheduled for today.`;
   } else if (todaysCount === 1) {
@@ -449,7 +458,6 @@ function updateWelcomeMessage() {
 
   welcomeNode.innerHTML = message;
 }
-
 
 function renderAll() {
   renderCalendar();
