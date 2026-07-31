@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Log — Calendar</title>
+<meta name="description" content="A clean, editable calendar for planning study sessions, assignments, and exams.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">Study Log</span>
+      <h1>Your study calendar</h1>
+    </div>
+    <div class="streak">
+      Current study streak: <strong id="streakCount">0</strong> day(s)
+    </div>
+  </header>
+
+  <div class="layout">
+    <div class="calendar-wrap">
+      <div class="month-tab" id="monthTab">Aug 2026</div>
+      <div class="calendar-card">
+        <div class="calendar-head">
+          <div class="month-nav">
+            <button class="nav-btn" id="prevBtn" aria-label="Previous month">&#8249;</button>
+            <div class="month-label" id="monthLabel">August 2026</div>
+            <button class="nav-btn" id="nextBtn" aria-label="Next month">&#8250;</button>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button class="today-btn" id="todayBtn">Today</button>
+            <button class="add-btn" id="addEventBtn">+ Add session</button>
+          </div>
+        </div>
+        <div class="weekday-row" id="weekdayRow"></div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </div>
+
+    <aside class="sidebar">
+      <div class="panel">
+        <h2>Next two weeks</h2>
+        <div class="agenda-list" id="agendaList"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Show on calendar</h2>
+        <div class="legend" id="legend"></div>
+      </div>
+
+      <div class="panel">
+        <button class="reset-btn" id="resetBtn">Reset to defaults</button>
+        <p class="storage-note">
+          Events you add here are saved in this browser only. To edit the
+          starting set from the source code instead, open <code>js/events.js</code>.
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <p class="footer-note">Click any day to add an event · Click an event to edit or delete it</p>
+</div>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <h3 id="modalTitle">New event</h3>
+    <form id="eventForm">
+      <div class="field">
+        <label for="titleInput">Title</label>
+        <input type="text" id="titleInput" placeholder="e.g. Read ch. 5 — Thermodynamics" required maxlength="80">
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="dateInput">Date</label>
+          <input type="date" id="dateInput" required>
+        </div>
+        <div class="field">
+          <label for="timeInput">Time (optional)</label>
+          <input type="time" id="timeInput">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Type</label>
+        <div class="type-options">
+          <button type="button" class="type-chip" data-type="study">Study session</button>
+          <button type="button" class="type-chip" data-type="assignment">Assignment</button>
+          <button type="button" class="type-chip" data-type="exam">Exam</button>
+          <button type="button" class="type-chip" data-type="review">Review</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="notesInput">Notes (optional)</label>
+        <textarea id="notesInput" placeholder="Anything worth remembering about this one"></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <div class="modal-actions-left">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-ghost" id="closeModalBtn">Cancel</button>
+        </div>
+        <button type="button" class="btn btn-danger" id="deleteBtn" style="display:none;">Delete</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/events.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
