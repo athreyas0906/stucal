@@ -169,8 +169,32 @@
 
 <script src="js/events.js"></script>
 <script src="js/app.js"></script>
-</body>
-  <div id="appSplashLoader">
-  <div class="splash-text-reveal">Loading</div>
+    <!-- ... existing calendar layout markup above ... -->
+
+ <!-- Floating Menu Button and Action Panel Bundle -->
+<div class="floating-menu-container">
+  <div class="floating-menu-panel" id="floatingActionPanel">
+    <button id="exportBtn" class="floating-action-item">📥 Backup Data</button>
+    <button id="importBtn" class="floating-action-item">📤 Restore Data</button>
+    
+    <!-- FIXED: Restores your original text container box layout completely -->
+    <div class="floating-reset-block">
+      <button id="resetBtn">Reset to defaults</button>
+      <p class="reset-help-text">
+        Events you add here are saved in this browser only. To edit the starting set from the source code instead, open <code>js/events.js</code>.
+      </p>
+    </div>
+  </div>
+  
+  <button class="floating-trigger-btn" id="floatingMenuTrigger" title="Data Actions">
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+  </button>
 </div>
+<input type="file" id="hiddenFileInput" accept=".json" style="display: none;">
+</body>
+</html>
+
+</body>
 </html>
