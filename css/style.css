@@ -456,6 +456,7 @@ button {
 .inline-tag-dot.dot-physics     { background-color: #00D2FC !important; } /* Vivid Cyan */
 .inline-tag-dot.dot-chemistry   { background-color: #00E676 !important; } /* Spring Green */
 .inline-tag-dot.dot-mathematics { background-color: #FF9100 !important; } /* Deep Amber */
+.inline-tag-dot.dot-general     { background-color: #C62828 !important; } /* Deep Amber */
 
 .pill-time {
   font-family: var(--font-mono), monospace;
@@ -549,6 +550,7 @@ button {
 .tag-physics .pill-dot     { background-color: #00D2FC !important; }
 .tag-chemistry .pill-dot   { background-color: #00E676 !important; }
 .tag-mathematics .pill-dot { background-color: #FF9100 !important; }
+.tag-general .pill-dot     { background-color: #C62828 !important; }
 
 .legend-row.tag-study .pill-dot       { background-color: #7C4DFF !important; }
 .legend-row.tag-class .pill-dot       { background-color: #0077FF !important; }
@@ -556,6 +558,7 @@ button {
 .legend-row.tag-physics .pill-dot     { background-color: #00D2FC !important; }
 .legend-row.tag-chemistry .pill-dot   { background-color: #00E676 !important; }
 .legend-row.tag-mathematics .pill-dot { background-color: #FF9100 !important; }
+.legend-row.tag-general .pill-dot     { background-color: #C62828 !important; }
 /* ---------------------------------------------------------
    Pill Containers (Unified Calendar & Legend Layout)
 --------------------------------------------------------- */
@@ -956,6 +959,13 @@ button {
   border-color: #FFCC80 !important;
   font-weight: 500;
 }
+.multi-chip-wrapper input[value="general"]:checked + .chip-label { 
+    background: #C62828 !important; 
+    color: #EF5350 !important; 
+    border-color: #FFCDD2 !important; 
+    font-weight: 500; 
+}
+
 
 /* ---------------------------------------------------------
    Modal Actions & Buttons
