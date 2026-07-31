@@ -1091,7 +1091,8 @@ button {
   border: none !important;
   padding: 8px 16px !important;
   border-radius: 6px !important;
-  width: 150px !important;
+  width: 100% !important; /* Let buttons dynamically scale to the 240px container width */
+  box-sizing: border-box !important;
   text-align: left !important;
   cursor: pointer !important;
   white-space: nowrap !important;
@@ -1101,7 +1102,57 @@ button {
 .floating-action-item:hover {
   background-color: #F2F3F5 !important;
 }
+/* Outer structure card matches the original layout block rules */
+.floating-reset-block {
+  border-top: 1px solid #E8EAEF !important;
+  padding: 12px 14px !important;
+  margin-top: 6px !important;
+  background-color: #FFFFFF !important;
+  width: 240px !important; /* Expands menu card width to hold help text beautifully */
+  box-sizing: border-box !important;
+}
 
+/* The exact replica button layout styling rules */
+.floating-reset-block #resetBtn {
+  width: 100% !important;
+  font-family: var(--font-mono), monospace !important;
+  font-size: 13px !important;
+  color: #888888 !important;
+  background: transparent !important;
+  border: 1px dashed #C5C9D4 !important;
+  padding: 10px !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  display: block !important;
+  margin-bottom: 8px !important;
+  transition: background-color 0.15s ease, color 0.15s ease !important;
+}
+.floating-reset-block #resetBtn:hover {
+  background-color: #FFF0EF !important;
+  color: #FF2E63 !important;
+  border-color: #FFE0DE !important;
+}
+
+/* Original explicit paragraph instructional tracking subtext rules */
+.floating-reset-block .reset-help-text {
+  font-family: var(--font-body), sans-serif !important;
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+  color: #888888 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+  white-space: normal !important; /* Allows text lines to break and wrap natively */
+}
+
+/* Format inner inline code strings cleanly */
+.floating-reset-block .reset-help-text code {
+  font-family: var(--font-mono), monospace !important;
+  background: #F2F3F5 !important;
+  padding: 1px 3px !important;
+  border-radius: 3px !important;
+}
 /* --- OPTIONAL: TRANSFORM HAMBURGER BARS INTO AN 'X' ON OPEN --- */
 .floating-menu-container.menu-active .hamburger-bar:nth-child(1) {
   transform: translateY(6px) rotate(45deg) !important;
