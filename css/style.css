@@ -961,8 +961,8 @@ button {
 }
 .multi-chip-wrapper input[value="general"]:checked + .chip-label { 
     background: #EF5350 !important; 
-    color: #C62828 !important; 
-    border-color: #FFCDD2 !important; 
+    color: #FFCDD2 !important; 
+    border-color: #C62828 !important; 
     font-weight: 500; 
 }
 
