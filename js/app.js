@@ -12,7 +12,8 @@ const TYPE_LABELS = {
   mock: "Mock",
   physics: "Physics",
   chemistry: "Chemistry",
-  mathematics: "Mathematics"
+  mathematics: "Mathematics",
+  general: "General"
 };
 
 let state = {
@@ -407,7 +408,7 @@ function renderStreak() {
   // CHANGED: Counts streak if a day has ANY event assigned (study, class, physics, math, etc.)
   // If you want it to count ONLY specifically "study", change the line back to: ev.type === "study"
   const activeDates = new Set(
-    state.events.filter(ev => ["study", "class", "physics", "chemistry", "mathematics", "mock"].includes(ev.type)).map(ev => ev.date)
+    state.events.filter(ev => ["study", "class", "physics", "chemistry", "mathematics", "mock", "general"].includes(ev.type)).map(ev => ev.date)
   );
   
   let streak = 0;
