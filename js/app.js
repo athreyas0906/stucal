@@ -695,22 +695,6 @@ function init() {
 
   initializeNotifications();
   startNotificationCheck();
-
-  const splash = document.getElementById("appSplashLoader");
-  if (splash) {
-    // 1. Text fades away briefly at 1 second
-    setTimeout(() => {
-      splash.classList.add("text-fade");
-      
-      // 2. Cinematic blur-dissolve ripple triggers immediately at 1.4 seconds
-      setTimeout(() => {
-        splash.classList.add("ripple-reveal");
-        
-        // 3. Fully remove from DOM tree after completion
-        setTimeout(() => splash.remove(), 500);
-      }, 400);
-    }, 1000);
-  }
 }
 
 // Kickstart the application loop cleanly
