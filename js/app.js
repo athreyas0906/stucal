@@ -576,7 +576,8 @@ document.getElementById("exportBtn").addEventListener("click", () => {
 document.getElementById("importBtn").addEventListener("click", () => {
   document.getElementById("hiddenFileInput").click();
 });
-// --- NEW: Toggle Floating Action Panel View ---
+
+// --- FIXED: Toggle Floating Action Panel View with Click Containment ---
 const menuContainer = document.querySelector(".floating-menu-container");
 const actionPanel = document.getElementById("floatingActionPanel");
 const menuTrigger = document.getElementById("floatingMenuTrigger");
@@ -588,10 +589,15 @@ if (menuTrigger && actionPanel) {
     menuContainer.classList.toggle("menu-active");
   });
 
-  // Close the action panel automatically if user clicks anywhere else on screen
+  // FIXED: Prevents clicks inside the panel text or buttons from triggering the close listener
+  actionPanel.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  // Close the action panel automatically if user clicks anywhere else on the screen
   document.addEventListener("click", () => {
     actionPanel.classList.remove("panel-open");
-    menuContainer.classList.remove("menu-active");
+    if (menuContainer) menuContainer.classList.remove("menu-active");
   });
 }
 
@@ -625,7 +631,6 @@ document.getElementById("hiddenFileInput").addEventListener("change", (e) => {
   };
   reader.readAsText(file);
 });
-
 document.getElementById("prevBtn").addEventListener("click", () => {
   const currentCursor = new Date(state.cursor);
   currentCursor.setDate(currentCursor.getDate() - 3);
