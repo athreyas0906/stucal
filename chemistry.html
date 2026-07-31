@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Mathematics | Study Planner</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+</head>
+
+<body data-subject="chemistry">
+
+    <!-- ==========================================
+         HEADER
+    =========================================== -->
+
+    <header class="subject-header">
+
+        <div class="subject-title">
+
+            <div class="subject-icon math">
+
+                📘
+
+            </div>
+
+            <div>
+
+                <h1 id="subjectName">
+
+                    Mathematics
+
+                </h1>
+
+                <p id="subjectSubtitle">
+
+                    Classes, study sessions and exams
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="header-buttons">
+
+            <a
+                href="index.html"
+                class="btn btn-outline">
+
+                ← Dashboard
+
+            </a>
+
+            <button
+                id="scheduleStudyBtn"
+                class="btn btn-primary">
+
+                Schedule Study Session
+
+            </button>
+
+        </div>
+
+    </header>
+
+    <!-- ==========================================
+         MAIN
+    =========================================== -->
+
+    <main class="container">
+
+        <!-- ======================================
+             STATISTICS
+        ======================================= -->
+
+        <section class="stats-grid">
+
+            <div class="mini-card">
+
+                <h4>
+
+                    Total Hours
+
+                </h4>
+
+                <strong id="subjectHours">
+
+                    0
+
+                </strong>
+
+            </div>
+
+            <div class="mini-card">
+
+                <h4>
+
+                    Upcoming
+
+                </h4>
+
+                <strong id="subjectUpcoming">
+
+                    0
+
+                </strong>
+
+            </div>
+
+            <div class="mini-card">
+
+                <h4>
+
+                    Study Sessions
+
+                </h4>
+
+                <strong id="subjectStudy">
+
+                    0
+
+                </strong>
+
+            </div>
+
+            <div class="mini-card">
+
+                <h4>
+
+                    Classes
+
+                </h4>
+
+                <strong id="subjectClasses">
+
+                    0
+
+                </strong>
+
+            </div>
+
+        </section>
+
+        <!-- ======================================
+             QUICK ACTIONS
+        ======================================= -->
+
+        <section class="card mt-30">
+
+            <div class="flex-between">
+
+                <div>
+
+                    <h2>
+
+                        Mathematics Planner
+
+                    </h2>
+
+                    <p>
+
+                        Manage lectures, study sessions,
+                        assignments and exams.
+
+                    </p>
+
+                </div>
+
+                <button
+                    id="addEventButton"
+                    class="btn btn-success">
+
+                    + Add Event
+
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- ======================================
+             SEARCH & FILTERS
+             (continues in Part 2)
+        ======================================= -->
+              <!-- ======================================
+             SEARCH
+        ======================================= -->
+
+        <section class="card mt-20">
+
+            <div class="flex-between mb-20">
+
+                <h2>
+
+                    Events
+
+                </h2>
+
+                <input
+                    id="searchEvents"
+                    type="text"
+                    placeholder="🔍 Search events...">
+
+            </div>
+
+            <!-- ==================================
+                 FILTER BUTTONS
+            =================================== -->
+
+            <div class="filters">
+
+                <button
+                    class="btn btn-outline filter-btn active"
+                    data-filter="all">
+
+                    All
+
+                </button>
+
+                <button
+                    class="btn btn-outline filter-btn"
+                    data-filter="class">
+
+                    Classes
+
+                </button>
+
+                <button
+                    class="btn btn-outline filter-btn"
+                    data-filter="study">
+
+                    Study
+
+                </button>
+
+                <button
+                    class="btn btn-outline filter-btn"
+                    data-filter="assignment">
+
+                    Assignments
+
+                </button>
+
+                <button
+                    class="btn btn-outline filter-btn"
+                    data-filter="exam">
+
+                    Exams
+
+                </button>
+
+            </div>
+
+            <!-- ==================================
+                 EVENT LIST
+            =================================== -->
+
+            <div
+                id="eventList"
+                class="event-list mt-30">
+
+                <!-- Events inserted by subject.js -->
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+
+                        📘
+
+                    </div>
+
+                    <h3>
+
+                        No Mathematics Events Yet
+
+                    </h3>
+
+                    <p>
+
+                        Click <strong>Add Event</strong>
+                        or the floating <strong>+</strong>
+                        button to schedule your first
+                        lecture or study session.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ======================================
+             TODAY'S AGENDA
+        ======================================= -->
+
+        <section class="card mt-30">
+
+            <div class="flex-between mb-20">
+
+                <h2>
+
+                    Today's Agenda
+
+                </h2>
+
+                <span id="todayDate">
+
+                </span>
+
+            </div>
+
+            <div
+                id="todayAgenda"
+                class="event-list">
+
+                <!-- Filled by subject.js -->
+
+            </div>
+
+        </section>
+
+        <!-- ======================================
+             UPCOMING EVENTS
+        ======================================= -->
+
+        <section class="card mt-30">
+
+            <div class="flex-between mb-20">
+
+                <h2>
+
+                    Upcoming
+
+                </h2>
+
+                <span
+                    id="upcomingCount">
+
+                    0 Events
+
+                </span>
+
+            </div>
+
+            <div
+                id="upcomingList"
+                class="event-list">
+
+                <!-- Filled dynamically -->
+
+            </div>
+
+        </section>
+
+        <!-- ======================================
+             FLOATING ACTION BUTTON
+        ======================================= -->
+
+        <button
+            id="quickAddButton"
+            class="floating-action-button"
+            title="Add Event"
+            aria-label="Add Event">
+
+            +
+
+        </button>
+
+        <!-- ======================================
+             Event Modal
+             (continues in Part 3)
+        ======================================= -->
+              <!-- ======================================
+             EVENT EDITOR MODAL
+        ======================================= -->
+
+        <div
+            id="eventEditor"
+            class="modal">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h2 id="modalTitle">
+
+                        Add Mathematics Event
+
+                    </h2>
+
+                    <button
+                        type="button"
+                        class="modal-close"
+                        id="closeModal">
+
+                        ×
+
+                    </button>
+
+                </div>
+
+                <form id="eventForm">
+
+                    <input
+                        type="hidden"
+                        id="eventId">
+
+                    <!-- ==========================
+                         TITLE
+                    =========================== -->
+
+                    <div class="form-group">
+
+                        <label for="eventTitle">
+
+                            Event Title
+
+                        </label>
+
+                        <input
+                            id="eventTitle"
+                            type="text"
+                            placeholder="Calculus Lecture"
+                            required>
+
+                    </div>
+
+                    <!-- ==========================
+                         DATE & TYPE
+                    =========================== -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="eventDate">
+
+                                Date
+
+                            </label>
+
+                            <input
+                                id="eventDate"
+                                type="date"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="eventType">
+
+                                Type
+
+                            </label>
+
+                            <select id="eventType">
+
+                                <option value="class">
+
+                                    Class
+
+                                </option>
+
+                                <option value="study">
+
+                                    Study Session
+
+                                </option>
+
+                                <option value="assignment">
+
+                                    Assignment
+
+                                </option>
+
+                                <option value="exam">
+
+                                    Exam
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ==========================
+                         TIMES
+                    =========================== -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="startTime">
+
+                                Start Time
+
+                            </label>
+
+                            <input
+                                id="startTime"
+                                type="time"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="endTime">
+
+                                End Time
+
+                            </label>
+
+                            <input
+                                id="endTime"
+                                type="time"
+                                required>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ==========================
+                         REMINDER
+                    =========================== -->
+
+                    <div class="checkbox">
+
+                        <input
+                            id="eventReminder"
+                            type="checkbox"
+                            checked>
+
+                        <label for="eventReminder">
+
+                            Enable Desktop Reminder
+
+                        </label>
+
+                    </div>
+
+                    <!-- ==========================
+                         NOTES
+                    =========================== -->
+
+                    <div class="form-group">
+
+                        <label for="eventNotes">
+
+                            Notes
+
+                        </label>
+
+                        <textarea
+                            id="eventNotes"
+                            placeholder="Chapter numbers, homework, room number..."></textarea>
+
+                    </div>
+
+                    <!-- ==========================
+                         BUTTONS
+                    =========================== -->
+
+                    <div class="flex-between mt-20">
+
+                        <button
+                            type="button"
+                            id="deleteEventBtn"
+                            class="btn btn-danger">
+
+                            Delete
+
+                        </button>
+
+                        <div class="flex" style="gap:10px;">
+
+                            <button
+                                type="button"
+                                id="cancelEventBtn"
+                                class="btn btn-outline">
+
+                                Cancel
+
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary">
+
+                                Save Event
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ==========================================
+         JAVASCRIPT
+    =========================================== -->
+
+    <script src="js/storage.js"></script>
+    <script src="js/subject.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
