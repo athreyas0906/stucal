@@ -1009,6 +1009,110 @@ button {
   margin-top: 30px;
 }
 
+/* ==========================================================================
+   FLOATING HAMBURGER MENU ENGINE (BOTTOM RIGHT CORNER)
+   ========================================================================== */
+
+.floating-menu-container {
+  position: fixed !important;
+  bottom: 24px !important;
+  right: 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 12px !important;
+  z-index: 9999 !important; /* Floats high above grid lines and cards */
+}
+
+/* Core Circular Floating Trigger Button */
+.floating-trigger-btn {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid #D2D5DC !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  cursor: pointer !important;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.15s ease !important;
+}
+
+.floating-trigger-btn:hover {
+  background-color: #F2F3F5 !important;
+  transform: scale(1.04);
+}
+
+/* Hamburger lines styling */
+.hamburger-bar {
+  width: 18px !important;
+  height: 2px !important;
+  background-color: #333333 !important;
+  border-radius: 1px !important;
+  transition: transform 0.2s ease, opacity 0.2s ease !important;
+}
+
+/* Vertical Action Card Stack */
+.floating-menu-panel {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid #D2D5DC !important;
+  border-radius: 10px !important;
+  padding: 6px !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1) !important;
+  
+  /* Hides panel by default using scale/opacity for transitions */
+  opacity: 0 !important;
+  transform: translateY(10px) scale(0.95) !important;
+  pointer-events: none !important;
+  transition: opacity 0.2s cubic-bezier(0.25, 1, 0.5, 1), transform 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  transform-origin: bottom right !important;
+}
+
+/* Active State: Triggered via class list toggle */
+.floating-menu-panel.panel-open {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+  pointer-events: all !important;
+}
+
+/* Separate Action items row inside panel card */
+.floating-action-item {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  color: #333333 !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 8px 16px !important;
+  border-radius: 6px !important;
+  width: 150px !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: background-color 0.15s ease !important;
+}
+
+.floating-action-item:hover {
+  background-color: #F2F3F5 !important;
+}
+
+/* --- OPTIONAL: TRANSFORM HAMBURGER BARS INTO AN 'X' ON OPEN --- */
+.floating-menu-container.menu-active .hamburger-bar:nth-child(1) {
+  transform: translateY(6px) rotate(45deg) !important;
+}
+.floating-menu-container.menu-active .hamburger-bar:nth-child(2) {
+  opacity: 0 !important;
+}
+.floating-menu-container.menu-active .hamburger-bar:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg) !important;
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
