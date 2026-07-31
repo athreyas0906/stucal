@@ -1011,6 +1011,9 @@ button {
 /* ==========================================================================
    AUTOMATED RIPPLE EXPANSION & BLUR FOCUS DISSOLVE
    ========================================================================== */
+/* ==========================================================================
+   SLOWED CINEMATIC RIPPLE EXPANSION & DISSOLVE (GLITCH FIX)
+   ========================================================================== */
 
 #appSplashLoader {
   position: fixed !important;
@@ -1025,8 +1028,8 @@ button {
   justify-content: center !important;
   overflow: hidden !important;
   
-  /* AUTOMATED: Runs the ripple expand and blur dissolve sequence after 1.4s */
-  animation: automatedRippleFocus 0.6s cubic-bezier(0.25, 1, 0.5, 1) 1.4s forwards !important;
+  /* FIXED: Slowed down from 0.6s to 1.3s to add exactly 0.7s of extra runtime */
+  animation: automatedRippleFocus 1.3s cubic-bezier(0.25, 1, 0.5, 1) 1.4s forwards !important;
 }
 
 /* Minimalist loading text typography */
@@ -1042,7 +1045,7 @@ button {
   animation: textFadeAway 0.4s cubic-bezier(0.25, 1, 0.5, 1) 1s forwards !important;
 }
 
-/* --- THE AUTOMATED CSS KEYFRAMES --- */
+/* --- THE REMAPPED KEYFRAMES --- */
 
 @keyframes textFadeAway {
   0% {
@@ -1057,29 +1060,35 @@ button {
 
 @keyframes automatedRippleFocus {
   0% {
+    background-color: #FFFFFF !important; /* Stays solid at the absolute start */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    /* Concentric ripple starts as a tiny pinpoint exactly in the center */
     clip-path: circle(0% at 50% 50%);
     -webkit-clip-path: circle(0% at 50% 50%);
   }
+  /* FIXED: Gradually softens the background color so it doesn't flash white */
+  30% {
+    background-color: rgba(255, 255, 255, 0.7) !important;
+  }
   99% {
+    background-color: rgba(255, 255, 255, 0) !important;
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
-    /* Expand circle smoothly outward past the screens corner limits */
     clip-path: circle(141.4% at 50% 50%);
     -webkit-clip-path: circle(141.4% at 50% 50%);
     pointer-events: none;
   }
   100% {
+    background-color: rgba(255, 255, 255, 0) !important;
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
     clip-path: circle(141.4% at 50% 50%);
     -webkit-clip-path: circle(141.4% at 50% 50%);
     pointer-events: none;
-    display: none !important; /* Safely removes the overlay visibility mask */
+    display: none !important; /* Exits the view cleanly */
   }
 }
+
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
