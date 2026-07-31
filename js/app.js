@@ -593,17 +593,25 @@ function startNotificationCheck() {
 /* ---------------------------------------------------------
    App Initialization Hook
 --------------------------------------------------------- */
+/* ---------------------------------------------------------
+   App Initialization Hook
+--------------------------------------------------------- */
 function init() {
   // 1. Initialize core calendar data and states
   state.events = loadEvents();
   state.hiddenTypes = loadHiddenTypes();
-  renderWeekdayRow();
+  
+  /* REMOVED: This line is no longer needed for the 3-day layout */
+  // renderWeekdayRow(); 
+
+  // 2. Render the calendar grid columns and sidebar agenda preview panels
   renderAll();
 
-  // 2. Safely trigger the desktop notification background tasks
+  // 3. Safely trigger the desktop notification background tasks
   initializeNotifications();
   startNotificationCheck();
 }
 
 // Kickstart the application loop cleanly
 init();
+
