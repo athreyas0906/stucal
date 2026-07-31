@@ -30,7 +30,7 @@
 
 </head>
 
-<body data-subject="mathematics">
+<body data-subject="chemistry">
 
     <!-- ==========================================
          HEADER
@@ -40,28 +40,15 @@
 
         <div class="subject-title">
 
-            <div class="subject-icon math">
+            <div id="subjectIcon" class="subject-icon"></div>
 
-                📘
+<div>
 
-            </div>
+    <h1 id="subjectName"></h1>
 
-            <div>
+    <p id="subjectSubtitle"></p>
 
-                <h1 id="subjectName">
-
-                    Mathematics
-
-                </h1>
-
-                <p id="subjectSubtitle">
-
-                    Classes, study sessions and exams
-
-                </p>
-
-            </div>
-
+</div>
         </div>
 
         <div class="header-buttons">
@@ -174,11 +161,7 @@
 
                 <div>
 
-                    <h2>
-
-                        Mathematics Planner
-
-                    </h2>
+                    <h2 id="plannerTitle"></h2>
 
                     <p>
 
@@ -292,11 +275,7 @@
 
                     </div>
 
-                    <h3>
-
-                        No Mathematics Events Yet
-
-                    </h3>
+                    <h3 id="emptyTitle"></h3>
 
                     <p>
 
@@ -406,11 +385,7 @@
 
                 <div class="modal-header">
 
-                    <h2 id="modalTitle">
-
-                        Add Mathematics Event
-
-                    </h2>
+                    <h2 id="modalTitle"></h2>
 
                     <button
                         type="button"
@@ -444,7 +419,7 @@
                         <input
                             id="eventTitle"
                             type="text"
-                            placeholder="Calculus Lecture"
+                            placeholder="Enter event title"
                             required>
 
                     </div>
