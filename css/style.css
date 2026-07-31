@@ -1002,3 +1002,65 @@ button {
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+/* ==========================================================================
+   CINEMATIC RIPPLE & BLUR FOCUS INTRO OVERLAY
+   ========================================================================== */
+
+#appSplashLoader {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: #FFFFFF !important;
+  z-index: 99999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  pointer-events: all !important;
+  opacity: 1;
+}
+
+/* Minimalist loading text typography with built-in slight pulse breathing */
+.splash-text-reveal {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 24px !important;
+  font-weight: 300 !important;
+  color: #111111 !important;
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase !important;
+  transition: opacity 0.4s ease, transform 0.4s ease !important;
+}
+
+/* --- THE TRANSITION REVEAL ANIMATIONS --- */
+
+/* Step 1: Fade out the Loading Text briefly */
+#appSplashLoader.text-fade .splash-text-reveal {
+  opacity: 0 !important;
+  transform: scale(0.96) !important;
+}
+
+/* Step 2: The Ripple Expansion + Blur Dissolve Effect */
+#appSplashLoader.ripple-reveal {
+  animation: dynamicRippleFocus 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+}
+
+@keyframes dynamicRippleFocus {
+  0% {
+    opacity: 1;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    /* Simulated clip-path concentric ripple ring starting at center */
+    clip-path: circle(0% at 50% 50%);
+  }
+  100% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    /* Expand circle outward to reveal the full page underneath */
+    clip-path: circle(141.4% at 50% 50%);
+    pointer-events: none;
+  }
+}
+
