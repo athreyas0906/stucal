@@ -576,6 +576,24 @@ document.getElementById("exportBtn").addEventListener("click", () => {
 document.getElementById("importBtn").addEventListener("click", () => {
   document.getElementById("hiddenFileInput").click();
 });
+// --- NEW: Toggle Floating Action Panel View ---
+const menuContainer = document.querySelector(".floating-menu-container");
+const actionPanel = document.getElementById("floatingActionPanel");
+const menuTrigger = document.getElementById("floatingMenuTrigger");
+
+if (menuTrigger && actionPanel) {
+  menuTrigger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    actionPanel.classList.toggle("panel-open");
+    menuContainer.classList.toggle("menu-active");
+  });
+
+  // Close the action panel automatically if user clicks anywhere else on screen
+  document.addEventListener("click", () => {
+    actionPanel.classList.remove("panel-open");
+    menuContainer.classList.remove("menu-active");
+  });
+}
 
 // --- NEW: Intercept Uploaded File and Overwrite Local Storage ---
 document.getElementById("hiddenFileInput").addEventListener("change", (e) => {
