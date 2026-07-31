@@ -425,11 +425,38 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+
+function updateWelcomeMessage() {
+  const welcomeNode = document.getElementById("welcomeSubtext");
+  if (!welcomeNode) return;
+
+  const now = new Date();
+  const currentISO = toISODate(now);
+  
+  // Calculate active, unhidden sessions planned for today
+  const visibleMap = visibleEventsByDate();
+  const todaysCount = visibleMap[currentISO] ? visibleMap[currentISO].length : 0;
+
+  // Build an elegant greeting statement string
+  let message = `Welcome back! `;
+  if (todaysCount === 0) {
+    message += `You have no study sessions scheduled for today.`;
+  } else if (todaysCount === 1) {
+    message += `You have <strong style="color: #7C4DFF; font-weight: 600;">1</strong> study session scheduled for today.`;
+  } else {
+    message += `You have <strong style="color: #7C4DFF; font-weight: 600;">${todaysCount}</strong> study sessions scheduled for today.`;
+  }
+
+  welcomeNode.innerHTML = message;
+}
+
+
 function renderAll() {
   renderCalendar();
   renderLegend();
   renderAgenda();
   renderStreak();
+  updateWelcomeMessage(); 
 }
 /* ---------------------------------------------------------
    Modal Controls & Logic
@@ -641,29 +668,6 @@ function startNotificationCheck() {
 }
 
 
-function updateWelcomeMessage() {
-  const welcomeNode = document.getElementById("welcomeSubtext");
-  if (!welcomeNode) return;
-
-  const now = new Date();
-  const currentISO = toISODate(now);
-  
-  // Calculate active, unhidden sessions planned for today
-  const visibleMap = visibleEventsByDate();
-  const todaysCount = visibleMap[currentISO] ? visibleMap[currentISO].length : 0;
-
-  // Build an elegant greeting statement string
-  let message = `Welcome back! `;
-  if (todaysCount === 0) {
-    message += `You have no study sessions scheduled for today.`;
-  } else if (todaysCount === 1) {
-    message += `You have <strong style="color: #7C4DFF; font-weight: 600;">1</strong> study session scheduled for today.`;
-  } else {
-    message += `You have <strong style="color: #7C4DFF; font-weight: 600;">${todaysCount}</strong> study sessions scheduled for today.`;
-  }
-
-  welcomeNode.innerHTML = message;
-}
 
 // Make sure to add the call inside your main renderAll() definition:
 // updateWelcomeMessage();
