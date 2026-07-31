@@ -689,28 +689,25 @@ function startNotificationCheck() {
    App Initialization Hook (Timed Focus Intro Sequence)
 --------------------------------------------------------- */
 function init() {
-  // 1. Initialize calendar records and configurations
   state.events = loadEvents();
   state.hiddenTypes = loadHiddenTypes();
   renderAll();
 
-  // 2. Safely activate notification routines
   initializeNotifications();
   startNotificationCheck();
 
-  // 3. STEP-BY-STEP INTRO SEQUENCER TIMER TRACK
   const splash = document.getElementById("appSplashLoader");
   if (splash) {
-    // Step A: Allow "Loading" text to display briefly, then fade it out at 1000ms
+    // 1. Text fades away briefly at 1 second
     setTimeout(() => {
       splash.classList.add("text-fade");
       
-      // Step B: Trigger the cinematic ripple expand + blur focus dissolve immediately after at 1400ms
+      // 2. Cinematic blur-dissolve ripple triggers immediately at 1.4 seconds
       setTimeout(() => {
         splash.classList.add("ripple-reveal");
         
-        // Step C: Discard node from DOM entirely after animation completes to free system hardware assets
-        setTimeout(() => splash.remove(), 600);
+        // 3. Fully remove from DOM tree after completion
+        setTimeout(() => splash.remove(), 500);
       }, 400);
     }, 1000);
   }
