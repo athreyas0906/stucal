@@ -56,7 +56,21 @@
         <h2>Show on calendar</h2>
         <div class="legend" id="legend"></div>
       </div>
-    
+    <!-- Restored Direct Sidebar Controls Block -->
+<div class="field" style="display: flex; gap: 8px; margin-top: 15px; margin-bottom: 5px;">
+  <button id="exportBtn" class="pill" style="justify-content: center; background: #E8EAEF !important; border-color: #C5C9D4 !important; width: 50%;">📥 Backup</button>
+  <button id="importBtn" class="pill" style="justify-content: center; background: #E8EAEF !important; border-color: #C5C9D4 !important; width: 50%;">📤 Restore</button>
+</div>
+
+<div class="reset-container" style="border-top: 1px solid #E8EAEF; padding-top: 12px; margin-top: 6px;">
+  <button id="resetBtn" style="width: 100%; font-family: var(--font-mono), monospace; font-size: 13px; color: #888888; background: transparent; border: 1px dashed #C5C9D4; padding: 10px; border-radius: 6px; cursor: pointer; text-align: center; display: block; margin-bottom: 8px;">Reset to defaults</button>
+  <p style="font-family: var(--font-body), sans-serif; font-size: 11px; line-height: 1.45; color: #888888; margin: 0; padding: 0; text-align: left;">
+    Events you add here are saved in this browser only. To edit the starting set from the source code instead, open <code>js/events.js</code>.
+  </p>
+</div>
+
+<input type="file" id="hiddenFileInput" accept=".json" style="display: none;">
+
     </aside>
   </div>
 
@@ -154,30 +168,6 @@
 
 <script src="js/events.js"></script>
 <script src="js/app.js"></script>
-    <!-- ... existing calendar layout markup above ... -->
-
- <!-- Floating Menu Button and Action Panel Bundle -->
-<div class="floating-menu-container">
-  <div class="floating-menu-panel" id="floatingActionPanel">
-    <button id="exportBtn" class="floating-action-item">📥 Backup Data</button>
-    <button id="importBtn" class="floating-action-item">📤 Restore Data</button>
-    
-    <!-- FIXED: Restores your original text container box layout completely -->
-    <div class="floating-reset-block">
-      <button id="resetBtn">Reset to defaults</button>
-      <p class="reset-help-text">
-        Events you add here are saved in this browser only. To edit the starting set from the source code instead, open <code>js/events.js</code>.
-      </p>
-    </div>
-  </div>
-  
-  <button class="floating-trigger-btn" id="floatingMenuTrigger" title="Data Actions">
-    <span class="hamburger-bar"></span>
-    <span class="hamburger-bar"></span>
-    <span class="hamburger-bar"></span>
-  </button>
-</div>
-<input type="file" id="hiddenFileInput" accept=".json" style="display: none;">
 </body>
 </html>
 
