@@ -83,18 +83,7 @@ button {
   align-items: baseline;
   gap: 12px;
 }
-/* Target the core header text container block */
-.brand, 
-.topbar .brand,
-div.brand {
-  /* FIXED: Changes orientation to force elements onto separate vertical rows */
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  justify-content: flex-start !important;
-  gap: 4px !important; /* Elegant pixel separation between title and subtext */
-  width: auto !important;
-}
+
 
 /* Eliminate browser headline spacing overrides */
 .brand h1,
