@@ -685,22 +685,36 @@ function startNotificationCheck() {
 /* ---------------------------------------------------------
    App Initialization Hook
 --------------------------------------------------------- */
+/* ---------------------------------------------------------
+   App Initialization Hook (Timed Focus Intro Sequence)
+--------------------------------------------------------- */
 function init() {
-  // 1. Initialize core calendar data and states
+  // 1. Initialize calendar records and configurations
   state.events = loadEvents();
   state.hiddenTypes = loadHiddenTypes();
-  
-  /* REMOVED: This line is no longer needed for the 3-day layout */
-  // renderWeekdayRow(); 
-
-  // 2. Render the calendar grid columns and sidebar agenda preview panels
   renderAll();
 
-  // 3. Safely trigger the desktop notification background tasks
+  // 2. Safely activate notification routines
   initializeNotifications();
   startNotificationCheck();
+
+  // 3. STEP-BY-STEP INTRO SEQUENCER TIMER TRACK
+  const splash = document.getElementById("appSplashLoader");
+  if (splash) {
+    // Step A: Allow "Loading" text to display briefly, then fade it out at 1000ms
+    setTimeout(() => {
+      splash.classList.add("text-fade");
+      
+      // Step B: Trigger the cinematic ripple expand + blur focus dissolve immediately after at 1400ms
+      setTimeout(() => {
+        splash.classList.add("ripple-reveal");
+        
+        // Step C: Discard node from DOM entirely after animation completes to free system hardware assets
+        setTimeout(() => splash.remove(), 600);
+      }, 400);
+    }, 1000);
+  }
 }
 
 // Kickstart the application loop cleanly
 init();
-
