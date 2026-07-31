@@ -547,6 +547,13 @@ button {
 .tag-physics .pill-dot     { background-color: #00D2FC !important; }
 .tag-chemistry .pill-dot   { background-color: #00E676 !important; }
 .tag-mathematics .pill-dot { background-color: #FF9100 !important; }
+
+.legend-row.tag-study .pill-dot       { background-color: #7C4DFF !important; }
+.legend-row.tag-class .pill-dot       { background-color: #0077FF !important; }
+.legend-row.tag-mock .pill-dot        { background-color: #FF2E63 !important; }
+.legend-row.tag-physics .pill-dot     { background-color: #00D2FC !important; }
+.legend-row.tag-chemistry .pill-dot   { background-color: #00E676 !important; }
+.legend-row.tag-mathematics .pill-dot { background-color: #FF9100 !important; }
 /* ---------------------------------------------------------
    Pill Containers (Unified Calendar & Legend Layout)
 --------------------------------------------------------- */
