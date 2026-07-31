@@ -1,6 +1,6 @@
 /* app.js — calendar rendering, editing, and persistence.
    Data lives in the browser's localStorage once initialized;
-   see events.js for the one-time seed data. */
+   see events.js for the one-time seed data. checking*/
 
 const STORAGE_KEY = "studyCalendar.events.v1";
 const INIT_KEY = "studyCalendar.initialized.v1";
