@@ -521,6 +521,57 @@ document.getElementById("deleteBtn").addEventListener("click", () => {
 /* ---------------------------------------------------------
    Top-Level Navigation Controls
 --------------------------------------------------------- */
+// --- NEW: Download Calendar Events Array as a Local .json Text File ---
+document.getElementById("exportBtn").addEventListener("click", () => {
+  if (state.events.length === 0) {
+    alert("There are no events to backup.");
+    return;
+  }
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state.events, null, 2));
+  const downloadAnchor = document.createElement('a');
+  downloadAnchor.setAttribute("href", dataStr);
+  downloadAnchor.setAttribute("download", "study_calendar_backup.json");
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  downloadAnchor.remove();
+});
+
+// --- NEW: Trigger Hidden File Explorer Window Prompt ---
+document.getElementById("importBtn").addEventListener("click", () => {
+  document.getElementById("hiddenFileInput").click();
+});
+
+// --- NEW: Intercept Uploaded File and Overwrite Local Storage ---
+document.getElementById("hiddenFileInput").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    try {
+      const parsedData = JSON.parse(event.target.result);
+      
+      // Safety Check: Enforce structural JSON array validation
+      if (!Array.isArray(parsedData)) {
+        alert("Invalid backup file format. Must be an array of events.");
+        return;
+      }
+
+      if (confirm(`Are you sure you want to restore ${parsedData.length} events? This will overwrite your current calendar.`)) {
+        state.events = parsedData;
+        saveEvents(); // Save array to LocalStorage
+        renderAll();   // Re-render views
+        alert("Calendar data successfully restored!");
+      }
+    } catch (err) {
+      alert("Error parsing file. Make sure it's a valid calendar JSON file.");
+    }
+    // Clear the input value so the same file can be uploaded sequentially
+    e.target.value = "";
+  };
+  reader.readAsText(file);
+});
+
 document.getElementById("prevBtn").addEventListener("click", () => {
   const currentCursor = new Date(state.cursor);
   currentCursor.setDate(currentCursor.getDate() - 3);
