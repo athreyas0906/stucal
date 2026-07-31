@@ -1006,6 +1006,10 @@ button {
    CINEMATIC RIPPLE & BLUR FOCUS INTRO OVERLAY
    ========================================================================== */
 
+/* ==========================================================================
+   STABLE GRAPHICS-ACCELERATED RIPPLE & BLUR FOCUS REVEAL
+   ========================================================================== */
+
 #appSplashLoader {
   position: fixed !important;
   top: 0 !important;
@@ -1019,10 +1023,13 @@ button {
   justify-content: center !important;
   overflow: hidden !important;
   pointer-events: all !important;
-  opacity: 1;
+  /* FIXED: Use hardware-accelerated transitions to dissolve the backdrop smoothly */
+  transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), backdrop-filter 0.5s ease !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
 }
 
-/* Minimalist loading text typography with built-in slight pulse breathing */
+/* Minimalist loading text typography */
 .splash-text-reveal {
   font-family: 'Inter', sans-serif !important;
   font-size: 24px !important;
@@ -1030,10 +1037,8 @@ button {
   color: #111111 !important;
   letter-spacing: 0.15em !important;
   text-transform: uppercase !important;
-  transition: opacity 0.4s ease, transform 0.4s ease !important;
+  transition: opacity 0.35s ease, transform 0.35s ease !important;
 }
-
-/* --- THE TRANSITION REVEAL ANIMATIONS --- */
 
 /* Step 1: Fade out the Loading Text briefly */
 #appSplashLoader.text-fade .splash-text-reveal {
@@ -1041,9 +1046,12 @@ button {
   transform: scale(0.96) !important;
 }
 
-/* Step 2: The Ripple Expansion + Blur Dissolve Effect */
+/* Step 2: FIXED - Smooth ripple expand and blur dissolve execution trigger */
 #appSplashLoader.ripple-reveal {
-  animation: dynamicRippleFocus 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+  opacity: 0 !important;
+  backdrop-filter: blur(0px) !important;
+  -webkit-backdrop-filter: blur(0px) !important;
+  pointer-events: none !important;
 }
 
 @keyframes dynamicRippleFocus {
