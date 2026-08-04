@@ -400,26 +400,6 @@ function renderAgenda() {
 }
 
 
-function renderStreak() {
-  const el = document.getElementById("streakCount");
-  const today = new Date();
-  today.setHours(0,0,0,0);
-  
-  // CHANGED: Counts streak if a day has ANY event assigned (study, class, physics, math, etc.)
-  // If you want it to count ONLY specifically "study", change the line back to: ev.type === "study"
-  const activeDates = new Set(
-    state.events.filter(ev => ["study", "class", "physics", "chemistry", "mathematics", "mock", "general"].includes(ev.type)).map(ev => ev.date)
-  );
-  
-  let streak = 0;
-  let cursor = new Date(today);
-  while (activeDates.has(toISODate(cursor))) {
-    streak++;
-    cursor.setDate(cursor.getDate() - 1);
-  }
-  el.textContent = streak;
-}
-
 function escapeHtml(str) {
   const div = document.createElement("div");
   div.textContent = str;
@@ -453,7 +433,6 @@ function renderAll() {
   renderCalendar();
   renderLegend();
   renderAgenda();
-  renderStreak();
   updateWelcomeMessage(); 
 
 }
