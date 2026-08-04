@@ -408,26 +408,27 @@ function escapeHtml(str) {
 
 
 function updateWelcomeMessage() {
-  const welcomeNode = document.getElementById("welcomeSubtext");
-  if (!welcomeNode) return;
+    const welcomeNode = document.getElementById("welcomeSubtext");
+    if (!welcomeNode) return;
 
-  const now = new Date();
-  const currentISO = toISODate(now);
-  const currentHour = now.getHours(); // Retrieves current hour (0-23)
+    const now = new Date();
+    const currentHour = now.getHours(); 
 
-  // 1. Calculate the contextual greeting based on time threshold windows
-  let timeGreeting = "Welcome to StuCal"; // Fallback default
-  if (currentHour >= 0 && currentHour < 12) {
-    timeGreeting = "Good morning";
-  } else if (currentHour >= 12 && currentHour < 17) {
-    timeGreeting = "Good afternoon";
-  } else if (currentHour >= 17 && currentHour < 0) {
-    timeGreeting = "Good evening";
-  }
-  welcomeNode.innerHTML = timeGreeting;
-  window.onload = updateWelcomeMessage;
+    let timeGreeting = "Welcome to StuCal"; 
+
+    if (currentHour >= 0 && currentHour < 12) {
+        timeGreeting = "Good morning";
+    } else if (currentHour >= 12 && currentHour < 17) {
+        timeGreeting = "Good afternoon";
+    } else if (currentHour >= 17 && currentHour < 24) { // Fixed: Changed < 0 to < 24
+        timeGreeting = "Good evening";
+    }
+
+    welcomeNode.innerHTML = timeGreeting;
 }
 
+// Fixed: Moved outside the function so it actually runs on page load
+window.onload = updateWelcomeMessage; 
 
 function renderAll() {
   renderCalendar();
