@@ -690,7 +690,7 @@ function init() {
   state.events = loadEvents();
   state.hiddenTypes = loadHiddenTypes();
   renderAll();
-
+  window.onload = updateWelcomeMessage;
   initializeNotifications();
   startNotificationCheck();
 }
