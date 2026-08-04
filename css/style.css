@@ -107,7 +107,7 @@ button {
   letter-spacing: -0.01em;
 }
 
-.streak {
+.welcomeSubtext {
   font-family: var(--font-mono);
   font-size: 13px;
   color: var(--ink-soft);
@@ -116,10 +116,7 @@ button {
   gap: 6px;
 }
 
-.streak strong {
-  color: var(--ink);
-  font-weight: 600;
-}
+
 
 /* ---------------------------------------------------------
    Layout
