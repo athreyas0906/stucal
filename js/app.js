@@ -640,7 +640,7 @@ function checkUpcomingNotifications() {
 
 function startNotificationCheck() {
   // Run the checker on a 30-minute interval loop
-  setInterval(checkUpcomingNotifications, 1800000);
+  setInterval(checkUpcomingNotifications, 120000);
 }
 
 
