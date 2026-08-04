@@ -437,28 +437,17 @@ function updateWelcomeMessage() {
 
   // 1. Calculate the contextual greeting based on time threshold windows
   let timeGreeting = "Good evening Athreya"; // Fallback default
-  if (currentHour >= 5 && currentHour < 12) {
-    timeGreeting = "Good morning Athreya";
+  if (currentHour >= 0 && currentHour < 12) {
+    timeGreeting = "Good morning";
   } else if (currentHour >= 12 && currentHour < 17) {
-    timeGreeting = "Good afternoon Athreya";
+    timeGreeting = "Good afternoon";
+  } else if (currentHour >= 17 && currentHour < 0) {
+    timeGreeting = "Good evening";
   }
-
-  // Calculate active, unhidden sessions planned for today
-  const visibleMap = visibleEventsByDate();
-  const todaysCount = visibleMap[currentISO] ? visibleMap[currentISO].length : 0;
-
-  // 2. Build the unified dynamic subtext string
-  let message = `${timeGreeting}! `;
-  if (todaysCount === 0) {
-    message += `You have no study sessions scheduled for today.`;
-  } else if (todaysCount === 1) {
-    message += `You have <strong style="color: #7C4DFF; font-weight: 600;">1</strong> study session scheduled for today.`;
-  } else {
-    message += `You have <strong style="color: #7C4DFF; font-weight: 600;">${todaysCount}</strong> study sessions scheduled for today.`;
-  }
-
   welcomeNode.innerHTML = message;
+  window.onload = updateWelcomeMessage;
 }
+
 
 function renderAll() {
   renderCalendar();
@@ -466,6 +455,7 @@ function renderAll() {
   renderAgenda();
   renderStreak();
   updateWelcomeMessage(); 
+
 }
 /* ---------------------------------------------------------
    Modal Controls & Logic
@@ -690,7 +680,7 @@ function init() {
   state.events = loadEvents();
   state.hiddenTypes = loadHiddenTypes();
   renderAll();
-  window.onload = updateWelcomeMessage;
+
   initializeNotifications();
   startNotificationCheck();
 }
