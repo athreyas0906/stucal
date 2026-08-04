@@ -416,7 +416,7 @@ function updateWelcomeMessage() {
   const currentHour = now.getHours(); // Retrieves current hour (0-23)
 
   // 1. Calculate the contextual greeting based on time threshold windows
-  let timeGreeting = "Good evening Athreya"; // Fallback default
+  let timeGreeting = "Welcome to StuCal"; // Fallback default
   if (currentHour >= 0 && currentHour < 12) {
     timeGreeting = "Good morning";
   } else if (currentHour >= 12 && currentHour < 17) {
@@ -424,7 +424,7 @@ function updateWelcomeMessage() {
   } else if (currentHour >= 17 && currentHour < 0) {
     timeGreeting = "Good evening";
   }
-  welcomeNode.innerHTML = message;
+  welcomeNode.innerHTML = timeGreeting;
   window.onload = updateWelcomeMessage;
 }
 
