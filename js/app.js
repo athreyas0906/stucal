@@ -627,7 +627,7 @@ function checkUpcomingNotifications() {
 
       if (eventDate >= now && eventDate <= thirtyMinsLater) {
         if (Notification.permission === "granted") {
-          new Notification("🔔 Upcoming Important Event!", {
+          new Notification("🔔 Upcoming Event!", {
             body: `${ev.title} starts at ${ev.time} (within 30 mins)`,
             icon: "favicon.ico"
           });
